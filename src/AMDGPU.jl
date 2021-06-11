@@ -49,6 +49,7 @@ end
 =#
 include("runtime.jl")
 include("sync.jl")
+active_kernels = Dict{HSAQueue,Vector{AMDGPU.RuntimeEvent{AMDGPU.HSAStatusSignal}}}()
 
 # Device sources must load _before_ the compiler infrastructure
 # because of generated functions.
@@ -153,6 +154,7 @@ function __init__()
                 Please run Pkg.build("AMDGPU") and reload AMDGPU.
                 """
             end
+            active_kernels[get_default_queue()] = Vector{AMDGPU.RuntimeEvent{AMDGPU.HSAStatusSignal}}() 
         else
             @warn "HSA initialization failed with code $status"
         end

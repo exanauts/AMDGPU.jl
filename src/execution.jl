@@ -193,6 +193,7 @@ macro roc(ex...)
                     foreach($wait!, ($(var_exprs...),))
                     if $launch
                         local $signal = $create_event($kernel.mod.exe)
+                        push!(AMDGPU.active_kernels[AMDGPU.get_default_queue()], $signal)
                         $kernel($kernel_args...; signal=$signal, $(call_kwargs...))
                         foreach(x->$mark!(x, $signal), ($(var_exprs...),))
                         $signal
