@@ -72,6 +72,7 @@ function Base.wait(event::RuntimeEvent{HSAStatusSignal}; check_exceptions=true, 
                 deleteat!(mod.metadata, idx)
             end
         end
+        deleteat!(active_kernels[get_default_queue()], findall(x->x==event, active_kernels[get_default_queue()]))
     end
     ex !== nothing && throw(ex)
 end
