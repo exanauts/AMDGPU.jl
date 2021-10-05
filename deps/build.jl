@@ -102,10 +102,8 @@ function find_ld_lld()
                 vstr = read(tmpfile[1], String)
                 rm(tmpfile[1])
                 vstr_splits = split(vstr, ' ')
-                if VersionNumber(vstr_splits[2]) >= v"6.0.0"
                     @info "Found useable ld.lld at $exp_ld_path"
                     return exp_ld_path
-                end
             catch
                 @warn "Failed running ld.lld in $exp_ld_path"
             end
